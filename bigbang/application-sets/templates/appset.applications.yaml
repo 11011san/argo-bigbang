@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: applications-appset
+  name: applications-appset-{{.Values.env }}
   namespace: argocd
 spec:
   generators:
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       name: '{{ "{{path[1]}}" }}-{{ .Values.env }}'
-      lables:
+      labels:
         env: {{ .Values.env }}
     spec:
       project: applications

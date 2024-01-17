@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-addon-appset
+  name: cluster-addon-appset-{{.Values.env }}
   namespace: argocd
 spec: 
   generators:
