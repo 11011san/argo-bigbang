@@ -3,7 +3,7 @@ kind: ApplicationSet
 metadata:
   name: applications-appset
   namespace: argocd
-spec: 
+spec:
   generators:
     - git:
         repoURL: https://github.com/{{ .Values.gitHubAccount }}/app-configs
@@ -14,7 +14,9 @@ spec:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: '{{ "{{path[1]}}" }}'
+      name: '{{ "{{path[1]}}" }}-{{ .Values.env }}'
+      lables:
+        env: {{ .Values.env }}
     spec:
       project: applications
       source:
@@ -23,14 +25,14 @@ spec:
         path: '{{ "{{path}}" }}'
         helm:
           valueFiles:
-          - ../values.default.yaml
-          - values.yaml
+            - ../values.default.yaml
+            - values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ "{{config.namespace}}" }}'
       syncPolicy:
         syncOptions:
-          - CreateNamespace=true            
+          - CreateNamespace=true
         automated:
           prune: true
           selfHeal: true

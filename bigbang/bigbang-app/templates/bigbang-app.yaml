@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bigbang-app
+  name: bigbang-app-{{ .Values.env }}
   namespace: argocd
 spec:
   destination:
