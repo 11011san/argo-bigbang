@@ -9,13 +9,14 @@ spec:
         repoURL: https://github.com/{{ .Values.gitHubAccount }}/app-configs
         revision: main
         files:
-          - path: "apps/*/{{.Values.env }}/values.yaml"
+          - path: "apps/*/*/{{.Values.env }}/values.yaml"
   syncPolicy:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: '{{ "{{path[1]}}" }}-{{ .Values.env }}'
+      name: '{{ "{{path[2]}}" }}-{{ .Values.env }}'
       labels:
+        side: '{{ "{{path[1]}}" }}'
         env: {{ .Values.env }}
     spec:
       project: applications
